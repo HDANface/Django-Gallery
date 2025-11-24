@@ -43,3 +43,6 @@ db.sqlite3
 # OS
 .DS_Store
 Thumbs.db
+
+# media
+media/images/**
