@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<style>
+    .image-thumbail{
+        height: 200px; /* 固定图片高度，保持统一 */
+        object-fit: cover; /* 图片裁剪填充，避免拉伸 */
+        border-radius: 5px;
+        margin: 8px;
+    }
+    
+    a{
+            text-decoration: none; 
+            color: black;   
+        }    
+</style>
+<body>
+
+<div class="container text-center m-5">
+  <div class="row">
+    
+    <!-- 左侧边栏 -->
+    <div class="col-sm-3">
+       <div class="card">
+            <div class="card-header">
+                标签
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"> <a href="{% url 'gallery'%}">All</a></li>
+                {% for category in cate %}
+                    <li class="list-group-item"><a href="{% url 'gallery' %}?category={{category.photos_name}}">{{category.photos_name}}</a></li>
+                {% endfor%}
+                <li class="list-group-item">
+                    <a href="{% url 'add_photos' %}" class="btn btn-dark btn-outline btn-sm m-1">Add Photos</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- 右侧卡片区域 -->
+    <div class="col-sm-9">
+      <div class="row"> <!-- 卡片容器（行） -->
+
+        {% for img in photos %}
+        <div class="col-md-4 mb-4"> <!-- mb-4：底部间距 -->
+            <div class="card h-100"> <!-- h-100：卡片高度占满父容器 -->
+                <img 
+                    src="{{ img.image.url }}" 
+                    class="image-thumbail" 
+                    alt="...">
+                <div class="card-body">
+                    <p class="card-text">{{ img.description }}</p>
+                    <a href="{% url 'photos' img.id %}" class="btn btn-primary">View image</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    
+      </div>
+    </div>
+  
+</div>
+
+</body>
+</html>
